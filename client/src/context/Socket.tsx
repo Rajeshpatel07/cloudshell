@@ -1,24 +1,16 @@
-import { ReactNode, FC, useContext, createContext, useState, useEffect, useRef } from "react";
+import { ReactNode, FC, useContext, createContext, useRef } from "react";
 
 interface ContextInterface {
   socket: WebSocket;
 }
 
-const SocketContext = createContext<ContextInterface | undefined>(undefined);
+const SocketContext = createContext<ContextInterface>({} as ContextInterface);
 
 export const SocketProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  let socket;
-
-  useEffect(() => {
-
-    socket = new WebSocket(import.meta.env.VITE_SOCKETURI);
-    socket.onopen = () => { console.log('WS open') }
-    socket.onclose = () => { console.log('WS close') }
-
-  }, []);
+  const socketRef = useRef(new WebSocket(import.meta.env.VITE_SOCKETURI));
 
   return (
-    <SocketContext.Provider value={{ socket }}>
+    <SocketContext.Provider value={{ socket: socketRef.current }}>
       {children}
     </SocketContext.Provider>
   );

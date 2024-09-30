@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Xterm } from 'xterm-react';
 import { Terminal as XTermInstance } from 'xterm';
+import useSocket from '../context/Socket';
 
-const socket = new WebSocket(import.meta.env.VITE_SOCKETURI)
+//const socket = new WebSocket(import.meta.env.VITE_SOCKETURI)
 
 const Terminal: React.FC = () => {
   const [terminal, setTerminal] = useState<XTermInstance | null>(null);
   const [command, setCommand] = useState<string>('');
 
+  const { socket } = useSocket();
 
   const onTermInit = (term: XTermInstance) => {
     setTerminal(term);
     term.reset();
-    socket.send(JSON.stringify({
-      event: "command",
-      command: "uname",
-      containerId: JSON.parse(localStorage.getItem("containerId") || "")
 
-    }))
+    console.log("readystate", socket.readyState)
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({
+        event: "command",
+        command: "uname",
+        containerId: JSON.parse(localStorage.getItem("containerId") || "")
+      }))
+    }
   }
 
 
@@ -51,6 +56,14 @@ const Terminal: React.FC = () => {
   };
 
   useEffect(() => {
+
+    const screen: HTMLDivElement | null = document.querySelector("#root > div > div > header > div > div > div.xterm-screen")
+
+    console.log(screen);
+    if (screen) {
+      screen.removeAttribute("style");
+    }
+    console.log("useeffect", socket.readyState)
     const socketHandler = (event: MessageEvent): void => {
       const message = JSON.parse(event.data);
       if (message.event === "buffer") {
@@ -65,7 +78,7 @@ const Terminal: React.FC = () => {
       removeEventListener("message", socketHandler);
     }
 
-  }, [socket, terminal])
+  }, [terminal])
 
   return (
     <div className="App">
