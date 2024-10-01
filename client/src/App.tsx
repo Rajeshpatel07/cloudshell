@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
+import { Outlet } from "react-router-dom";
 
 
 const App: FC = () => {
@@ -8,7 +8,7 @@ const App: FC = () => {
   return (
     <>
       <Navbar />
-      <Home />
+      <Outlet />
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { Image } from "./ui/Image";
 import { SimpleButton } from "./ui/Buttons";
+import { Link } from "react-router-dom";
 
 const Intro: FC = () => {
 
@@ -14,12 +15,12 @@ const Intro: FC = () => {
             <br className="hidden md:inline lg:hidden" /> without installing locally
           </p>
           <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <a href="#">
+            <Link to="login">
               <SimpleButton title="Get started" />
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="trydemo">
               <SimpleButton title="Try Demo" />
-            </a>
+            </Link>
           </div>
         </div>
         <div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 md:h-[30rem] lg:h-96 xl:h-[27rem] 2xl:h-[30rem]">

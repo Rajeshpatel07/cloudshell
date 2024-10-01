@@ -31,4 +31,12 @@ export const fields: Array<{
 		},
 	]
 
-
+export const config: {
+	title: string,
+	name: string,
+	type: string,
+} = {
+	title: "Container Name",
+	name: "container_name",
+	type: "text"
+}
