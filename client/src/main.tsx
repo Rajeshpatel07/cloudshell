@@ -4,7 +4,8 @@ import App from './App.tsx'
 import './index.css'
 import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 
-import { Demo, Home, Login, NotFound } from './pages'
+import { Dashboard, Demo, Home, Login, NotFound, Playground } from './pages'
+import { SocketProvider } from './context/Socket.tsx'
 
 
 const routes = [
@@ -21,8 +22,16 @@ const routes = [
     element: <Login />
   },
   {
+    route: "playground",
+    element: <Playground />
+  },
+  {
     route: "trydemo",
     element: <Demo />
+  },
+  {
+    route: "dashboard",
+    element: <Dashboard />
   }
 ]
 
@@ -40,6 +49,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <SocketProvider>
+      <RouterProvider router={router} />
+    </SocketProvider>
   </StrictMode>,
 )

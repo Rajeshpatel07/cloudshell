@@ -8,14 +8,14 @@ export const Button: FC<{ title: string }> = ({ title }) => {
 
     /* From Uiverse.io by Itskrish01 */
     <button
-      className="relative inline-flex h-11 active:scale-95 bg-gray-100 transistion overflow-hidden rounded-lg p-[1px] focus:outline-none"
+      className="relative inline-flex h-11 active:scale-95 bg-black transistion overflow-hidden rounded-lg p-[1px] focus:outline-none"
     >
       <span
         className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#e7029a_0%,#f472b6_50%,#bd5fff_100%)]"
       >
       </span>
       <span
-        className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg  bg-gray-300 dark:bg-slate-950 px-6 text-sm font-medium text-black dark:text-white backdrop-blur-3xl gap-2 undefined"
+        className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-lg   bg-slate-950 px-6 text-sm font-medium text-white backdrop-blur-3xl gap-2 undefined"
       >
         {title}
         <svg

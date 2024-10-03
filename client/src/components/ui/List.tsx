@@ -1,4 +1,6 @@
 import { FC } from "react"
+import { Home } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export const SimpleList: FC<{ items: Array<{ title: string }> }> = ({ items }) => {
   return (
@@ -16,4 +18,19 @@ export const SimpleList: FC<{ items: Array<{ title: string }> }> = ({ items }) =
   )
 }
 
+
+export const ListLinks: FC<{ title: string }> = ({ title }) => {
+
+
+  return (
+    <>
+      <li>
+        <Link to="#" className="flex items-center gap-2 p-2 rounded hover:bg-gray-800">
+          {title}
+        </Link>
+      </li>
+    </>
+
+  )
+}
 

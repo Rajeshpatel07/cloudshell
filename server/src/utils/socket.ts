@@ -17,7 +17,10 @@ export const command = (ws: WebSocket, message: socketMessage, containers: conta
 
 			if (!container.listening) {
 				shellStream.on("data", data => {
-					ws.send(JSON.stringify({ event: "buffer", buffer: data.toString() }));
+					const buffer = data.toString();
+					if (buffer !== command) {
+						ws.send(JSON.stringify({ event: "buffer", buffer }));
+					}
 				});
 
 				shellStream.on("err", err => {

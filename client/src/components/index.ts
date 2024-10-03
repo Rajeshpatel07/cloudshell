@@ -1,14 +1,16 @@
-import Terminal from "./Terminal"
-import Demo from "./Demo"
+import TerminalWindow from "./Term"
+import Working from "./Working"
 import Navbar from "./Navbar"
 import Intro from "./Intro"
 import Form from "./Form"
+import Table from "./Table"
 
 
 export {
-	Terminal,
-	Demo,
+	TerminalWindow,
+	Working,
 	Navbar,
 	Intro,
 	Form,
+	Table,
 }

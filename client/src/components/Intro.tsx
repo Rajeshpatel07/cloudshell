@@ -1,33 +1,53 @@
 import { FC } from "react"
-import { Image } from "./ui/Image";
-import { SimpleButton } from "./ui/Buttons";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Intro: FC = () => {
 
   return (
-    <section className=" text-gray-100 dark:text-gray-800 py-12">
-      <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-around">
-        <div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-lg xl:max-w-lg lg:text-left">
-          <h1 className="text-5xl font-bold leading-none dark:text-white sm:text-6xl">Run your Favorite OS in Cloud
-          </h1>
-          <p className="mt-6 mb-8 text-lg dark:text-white sm:mb-12">use your favorite operating system
-            <br className="hidden md:inline lg:hidden" /> without installing locally
+    <>
+      <section className="text-center mb-16">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          Virtual OS at Your Fingertips
+        </h1>
+        <p className="text-xl mb-8 text-gray-400">
+          Create and interact with virtual operating systems through a powerful online terminal.
+        </p>
+        <Link to="login">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full text-lg">
+            Get Started
+          </Button>
+        </Link>
+      </section>
+
+      <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
+        <div>
+          <h2 className="text-3xl font-bold mb-4">Powerful Virtual Environments</h2>
+          <p className="text-gray-400 mb-6">
+            Launch fully-functional virtual operating systems in seconds. Experiment, develop, and learn without risking your local machine.
           </p>
-          <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <Link to="login">
-              <SimpleButton title="Get started" />
-            </Link>
-            <Link to="trydemo">
-              <SimpleButton title="Try Demo" />
-            </Link>
-          </div>
+          <ul className="space-y-2">
+            {["Multiple OS options", "Persistent storage", "Customizable configurations"].map((feature, index) => (
+              <li key={index} className="flex items-center">
+                <ChevronRight className="h-5 w-5 text-blue-500 mr-2" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 md:h-[30rem] lg:h-96 xl:h-[27rem] 2xl:h-[30rem]">
-          <Image link="server.png" />
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
+          <img
+            src="https://cdn.prod.website-files.com/64b6f3636f598299028e8577/65d5db665ae2b6b691e54ac6_modern-editing%402x.webp"
+            alt="Virtual OS Interface"
+            className="w-full h-auto rounded"
+          />
         </div>
-      </div>
-    </section>
+      </section>
+    </>
+
+
+
   )
 }
 

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Dockerode from "dockerode";
 import { docker, containers } from "../index.js";
+import { isImageAvailable } from "../utils/dockerImage.js";
 
 export const home = (req: Request, res: Response): void => {
 	res.send("Cloud Os");
@@ -14,6 +15,7 @@ export const buildContainer = async (req: Request, res: Response): Promise<void>
 		return;
 	}
 	try {
+		await isImageAvailable(os);
 		const container: Dockerode.Container = await docker.createContainer({
 			Image: os,
 			Cmd: ["/bin/bash"],
