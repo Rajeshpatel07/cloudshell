@@ -4,6 +4,7 @@ import Login from "./Login";
 import Demo from "./Demo";
 import Playground from "./Playground";
 import Dashboard from "./Dashboard";
+import Signup from "./Signup";
 
 
 export {
@@ -12,5 +13,6 @@ export {
 	Login,
 	Demo,
 	Playground,
-	Dashboard
+	Dashboard,
+	Signup,
 }

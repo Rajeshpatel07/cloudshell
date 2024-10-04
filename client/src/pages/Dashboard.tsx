@@ -6,11 +6,11 @@ import { Table } from "@/components"
 
 // Mock data for the table
 const initialItems = [
-  { id: "001", name: "Ubuntu Server", time: "10:30 AM", status: "Running" },
-  { id: "002", name: "Debian VM", time: "11:45 AM", status: "Stopped" },
-  { id: "003", name: "Fedora Workstation", time: "09:15 AM", status: "Running" },
-  { id: "004", name: "CentOS Server", time: "02:00 PM", status: "Paused" },
-  { id: "005", name: "Arch Linux", time: "03:30 PM", status: "Running" },
+  { id: "i23329f2j392nf2fj230..", name: "Ubuntu Server", time: "10:30 AM", status: "Running" },
+  { id: "i23329f2j392nf2fj230..", name: "Debian VM", time: "11:45 AM", status: "Stopped" },
+  { id: "i23329f2j392nf2fj230..", name: "Fedora Workstation", time: "09:15 AM", status: "Running" },
+  { id: "i23329f2j392nf2fj230..", name: "CentOS Server", time: "02:00 PM", status: "Paused" },
+  { id: "i23329f2j392nf2fj230..", name: "Arch Linux", time: "03:30 PM", status: "Running" },
 ]
 
 
@@ -32,14 +32,11 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-black text-white flex w-full">
-      {/* Sidebar */}
       <SideBar />
 
-      {/* Main content */}
-      <main className="flex-1 p-8">
+      <main className="flex-1 py-8 px-3 md:px-8 overflow-x-scroll">
         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
-        {/* Search bar */}
         <div className="mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -54,7 +51,7 @@ const Dashboard = () => {
         </div>
 
         {/* Table */}
-        <div className="bg-gray-900 rounded-lg overflow-x-auto">
+        <div className="border-2 rounded-lg overflow-x-auto ">
           <Table items={items} />
         </div>
       </main>

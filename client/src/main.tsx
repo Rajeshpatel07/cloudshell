@@ -1,12 +1,11 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-
-import { Dashboard, Demo, Home, Login, NotFound, Playground } from './pages'
+import { Dashboard, Demo, Home, Login, NotFound, Playground, Signup } from './pages'
 import { SocketProvider } from './context/Socket.tsx'
-
+import { PageLoader } from './components/ui/Loaders.tsx'
 
 const routes = [
   {
@@ -32,6 +31,10 @@ const routes = [
   {
     route: "dashboard",
     element: <Dashboard />
+  },
+  {
+    route: "signup",
+    element: <Signup />
   }
 ]
 
@@ -40,7 +43,13 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       {
         routes.map((route, idx) => (
-          <Route path={route.route} element={route.element} key={idx} />
+          <Route path={route.route} element={
+
+            <Suspense fallback={<PageLoader />} key={idx}>
+              {route.element}
+
+            </Suspense>
+          } />
         ))
       }
     </Route>

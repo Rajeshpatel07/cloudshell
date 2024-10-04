@@ -2,7 +2,6 @@ import { FC } from 'react';
 
 export const ContainerLoader: FC = () => {
 
-
   return (
     <div className="loader flex justify-center items-center">
       <div>

@@ -21,7 +21,7 @@ const Intro: FC = () => {
         </Link>
       </section>
 
-      <section className="grid md:grid-cols-2 gap-12 items-center mb-16">
+      <section className="grid md:grid-cols-2 gap-12 px-2 items-center mb-16">
         <div>
           <h2 className="text-3xl font-bold mb-4">Powerful Virtual Environments</h2>
           <p className="text-gray-400 mb-6">
@@ -45,9 +45,6 @@ const Intro: FC = () => {
         </div>
       </section>
     </>
-
-
-
   )
 }
 

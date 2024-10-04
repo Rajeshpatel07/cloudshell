@@ -1,15 +1,18 @@
-import { FC, useState } from "react"
+import { FC, useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
-import { FormInput } from "@/components/ui/input"
+import { FormInput } from "../components/ui/input"
 
-const Login: FC = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+
+
+const Signup: FC = () => {
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [name, setName] = useState<string>("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Login attempt with:", { email, password })
+    console.log("Login attempt with:", { email, password, name })
   }
 
   return (
@@ -17,8 +20,17 @@ const Login: FC = () => {
 
       <main className="flex-grow flex items-center justify-center">
         <div className="w-full max-w-md px-3">
-          <h1 className="text-3xl font-bold mb-6 text-center">Login to CloudShell</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">Signup to CloudShell</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
+
+            <FormInput
+              label="name"
+              id="name"
+              type="text"
+              value={name}
+              setState={setName}
+              placeholder="Enter your name"
+            />
 
             <FormInput
               label="email"
@@ -36,23 +48,25 @@ const Login: FC = () => {
               setState={setPassword}
               placeholder="Enter your password"
             />
+
             <Button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-lg"
             >
-              Log In
+              Signup
             </Button>
           </form>
           <p className="mt-4 text-center text-sm text-gray-400">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-400 hover:underline">
-              Sign up
+            Already have an account?
+            <Link to="/login" className="text-blue-400 hover:underline">
+              Login
             </Link>
           </p>
         </div>
       </main>
     </div>
   )
+
 }
 
-export default Login; 
+export default Signup;

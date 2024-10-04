@@ -1,5 +1,4 @@
 import { FC } from "react"
-import { Home } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export const SimpleList: FC<{ items: Array<{ title: string }> }> = ({ items }) => {

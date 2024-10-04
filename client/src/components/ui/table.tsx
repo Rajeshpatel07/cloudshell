@@ -26,7 +26,7 @@ export const TableData: FC<TableDateProps> = ({ item }) => {
     <>
       <tr key={item.id}>
         <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.id}</td>
+        <td className="px-6 text-blue-500 underline py-4 whitespace-nowrap">{item.id}</td>
         <td className="px-6 py-4 whitespace-nowrap">{item.time}</td>
         <td className="px-6 py-4 whitespace-nowrap">
           <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.status === 'Running' ? 'bg-green-800 text-green-100' :

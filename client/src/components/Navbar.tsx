@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from './ui/Buttons'
+import { BorderButton } from './ui/button'
 import { Logo } from './ui/Image'
 
 const Navbar: FC = () => {
@@ -14,7 +14,7 @@ const Navbar: FC = () => {
         </Link>
         <div className="space-x-4">
           <Link to="trydemo">
-            <Button title='Try demo' />
+            <BorderButton title='Try demo' />
           </Link>
         </div>
       </nav>

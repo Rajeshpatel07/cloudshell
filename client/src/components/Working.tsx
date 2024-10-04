@@ -2,6 +2,7 @@ import { FC } from "react"
 import { Cloud, Server, Code } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Link } from "react-router-dom"
 
 const Working: FC = () => {
   return (
@@ -55,9 +56,11 @@ ubuntu@cloudshell:~$ _`}
             placeholder="Enter your email"
             className="max-w-sm bg-gray-800 text-white border-gray-700"
           />
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
-            Sign Up for Free
-          </Button>
+          <Link to="/signup">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
+              Sign Up for Free
+            </Button>
+          </Link>
         </form>
       </section>
     </>
