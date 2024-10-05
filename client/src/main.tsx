@@ -35,6 +35,10 @@ const routes = [
   {
     route: "signup",
     element: <Signup />
+  },
+  {
+    route: "config",
+    element: <Demo />
   }
 ]
 
@@ -43,11 +47,9 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       {
         routes.map((route, idx) => (
-          <Route path={route.route} element={
-
-            <Suspense fallback={<PageLoader />} key={idx}>
+          <Route path={route.route} key={idx} element={
+            <Suspense fallback={<PageLoader />} >
               {route.element}
-
             </Suspense>
           } />
         ))

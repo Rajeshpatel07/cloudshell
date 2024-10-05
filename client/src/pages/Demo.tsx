@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { os } from "@/data/OsImages"
 import { LogoCards } from "@/components/ui/Cards"
-import axios from "axios"
+import axios, { AxiosError, AxiosResponse, AxiosResponseTransformer } from "axios"
 import { useNavigate } from "react-router-dom"
 
 

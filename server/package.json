@@ -3,26 +3,37 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type":"module",
+  "type": "module",
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma"
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r ./src/prisma ./dist",
     "start": "node --loader ts-node/esm ./src/index.ts",
-    "dev":"nodemon --exec 'node --loader ts-node/esm' ./src/index.ts"
+    "dev": "nodemon --exec 'node --loader ts-node/esm' ./src/index.ts"
   },
   "dependencies": {
+    "@prisma/client": "5.20.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dockerode": "^4.0.2",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
     "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/dockerode": "^3.3.31",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/ws": "^8.5.12",
     "nodemon": "^3.1.7",
+    "prisma": "^5.20.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }

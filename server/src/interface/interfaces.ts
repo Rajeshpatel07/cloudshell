@@ -12,3 +12,10 @@ export type socketMessage = {
 	command?: string;
 }
 
+export interface userInterface {
+	id: string;
+	name: string;
+	email: string;
+	password: string;
+	createdAt: Date
+}

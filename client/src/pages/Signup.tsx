@@ -1,18 +1,26 @@
 import { FC, useState } from "react";
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FormInput } from "../components/ui/input"
-
-
+import axios from "axios";
 
 const Signup: FC = () => {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [name, setName] = useState<string>("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Login attempt with:", { email, password, name })
+    try {
+      const request = await axios.post("/api/v1/signup", { name, email, password });
+      console.log(request);
+      if (request.status === 201) {
+        navigate("/login");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (

@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import SideBar from "@/components/SideBar"
 import { Table } from "@/components"
+import axios from "axios"
+import { SimpleButton } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 
 // Mock data for the table
 const initialItems = [
@@ -30,12 +33,33 @@ const Dashboard = () => {
     setItems(filteredItems)
   }
 
+  //useEffect(() => {
+  //  const request = async () => {
+  //    const userId = JSON.parse(localStorage.getItem("userId") || "");
+  //    try {
+  //      const response = await axios.get(`/containers/${userId}`);
+  //      console.log(response);
+  //      if (response.status === 200) {
+  //        setItems(response.data.containers)
+  //      }
+  //    } catch (err) {
+  //      console.log(err)
+  //    }
+  //  }
+  //  request();
+  //}, [])
+
   return (
     <div className="min-h-screen bg-black text-white flex w-full">
       <SideBar />
 
-      <main className="flex-1 py-8 px-3 md:px-8 overflow-x-scroll">
-        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <main className="flex-1 py-8 px-3 md:px-8 overflow-x-auto">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold ">Dashboard</h1>
+          <Link to="/config">
+            <SimpleButton title="create Button" />
+          </Link>
+        </div>
 
         <div className="mb-6">
           <div className="relative">
