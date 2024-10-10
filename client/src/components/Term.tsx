@@ -4,12 +4,11 @@ import { Terminal as XTermInstance } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit'
 import { Button } from "@/components/ui/button"
 import useSocket from '@/context/Socket'
-import { checkSpecialKey } from '@/lib/utils';
 import 'xterm/css/xterm.css'
+import axios from 'axios';
 
 const TerminalWindow: FC = () => {
   const [terminal, setTerminal] = useState<XTermInstance | null>(null);
-  const [command, setCommand] = useState<string>('');
   const { socket } = useSocket();
 
   const onTermInit = (term: XTermInstance) => {
@@ -21,12 +20,11 @@ const TerminalWindow: FC = () => {
     if (socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({
         event: "command",
-        command: "uname",
+        command: "uname\r",
         containerId: JSON.parse(localStorage.getItem("containerId") || "")
       }))
     }
   }
-
 
   const onTermDispose = () => {
     setTerminal(null);
@@ -34,42 +32,15 @@ const TerminalWindow: FC = () => {
 
   const handleData = (data: string) => {
     if (terminal) {
-      const code = data.charCodeAt(0);
-      console.log(code, "-->", data)
-      if (checkSpecialKey(data)) {
-        if (socket) {
-          socket.send(JSON.stringify({
-            event: "command",
-            command: data,
-            containerId: JSON.parse(localStorage.getItem("containerId") || "")
-          }))
-        }
-        setCommand('');
-      }
-      else if (code === 13 && command.length > 0) {
-        if (socket) {
-          socket.send(JSON.stringify({
-            event: "command",
-            command,
-            containerId: JSON.parse(localStorage.getItem("containerId") || "")
-          }))
-        }
-        setCommand('');
-      }
-      else if (code < 32 || code === 127) {
-        setCommand(command.slice(0, -1));
-        terminal.write("\b \b");
-        return;
-      }
-      else {
-        terminal.write(data);
-        setCommand((prev) => prev + data);
-      }
+      socket.send(JSON.stringify({
+        event: "command",
+        command: data,
+        containerId: JSON.parse(localStorage.getItem("containerId") || "")
+      }))
     }
   };
 
   useEffect(() => {
-
     const screen: HTMLDivElement | null = document.querySelector("#root > div > div > header > div > div > div.xterm-screen")
 
     if (screen) {
@@ -91,17 +62,29 @@ const TerminalWindow: FC = () => {
 
   }, [terminal, socket])
 
-  const handleRun = () => {
-    socket.send(JSON.stringify({
-      event: "command",
-      command,
-      containerId: JSON.parse(localStorage.getItem("containerId") || "")
-    }))
+  const handleStop = async () => {
+    try {
+      const id = JSON.parse(localStorage.getItem("containerId") || "");
+      const request = await axios.delete(`/api/v1/stop/${id}`)
+      console.log(request)
+    } catch (err) {
+      console.log(err)
+    }
   }
+
+  const handlePrune = async () => {
+    try {
+      const id = JSON.parse(localStorage.getItem("containerId") || "");
+      const request = await axios.delete(`/api/v1/prune/${id}`)
+      console.log(request)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-
       <main className="flex-grow container mx-auto px-4 py-6 flex flex-col">
         <div className=" flex flex-col  border-2 border-gray-800 rounded-md">
           <div className="bg-gray-900 rounded-t-lg p-2  flex items-center space-x-2">
@@ -118,13 +101,14 @@ const TerminalWindow: FC = () => {
           />
         </div>
         <div className="flex justify-center space-x-4 mt-4">
-          <Button variant="outline" onClick={handleRun} className="bg-gray-800 text-white hover:bg-gray-700">
-            RUN
-          </Button>
-          <Button variant="outline" className="bg-gray-800 text-white hover:bg-gray-700">
+          <Button variant="outline"
+            onClick={handleStop}
+            className="bg-gray-800 text-white hover:bg-gray-700">
             Stop Container
           </Button>
-          <Button variant="outline" className="bg-gray-800 text-white hover:bg-gray-700">
+          <Button variant="outline"
+            onClick={handlePrune}
+            className="bg-gray-800 text-white hover:bg-gray-700">
             Delete Container
           </Button>
         </div>

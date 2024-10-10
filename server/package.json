@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc && cp -r ./src/prisma ./dist",
-    "start": "node --loader ts-node/esm ./src/index.ts",
+    "start": "tsc --watch & nodemon ./dist/index.js",
     "dev": "nodemon --exec 'node --loader ts-node/esm' ./src/index.ts"
   },
   "dependencies": {

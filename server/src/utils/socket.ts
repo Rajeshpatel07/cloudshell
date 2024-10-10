@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 import { containersInterface, socketMessage } from "../interface/interfaces.js"
 
-export const command = (ws: WebSocket, message: socketMessage, containers: containersInterface) => {
+export const executeCommand = (ws: WebSocket, message: socketMessage, containers: containersInterface) => {
 	const { containerId, command } = message;
 
 	try {
@@ -13,16 +13,11 @@ export const command = (ws: WebSocket, message: socketMessage, containers: conta
 
 		if (command) {
 			const { shellStream } = container;
-			shellStream.write(command + "\n");
+			shellStream.write(command);
 
 			if (!container.listening) {
-				shellStream.on("data", data => {
-					const buffer = data.toString();
-					if (buffer !== command) {
-						console.log("command -->", command)
-						console.log("buffer -->", buffer);
-						ws.send(JSON.stringify({ event: "buffer", buffer }));
-					}
+				shellStream.on("data", buffer => {
+					ws.send(JSON.stringify({ event: "buffer", buffer: buffer.toString() }));
 				});
 
 				shellStream.on("err", err => {

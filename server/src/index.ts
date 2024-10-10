@@ -7,7 +7,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 import { PrismaClient } from '@prisma/client';
 import router from './routes/routes.js';
-import { command } from './utils/socket.js';
+import { executeCommand } from './utils/socket.js';
 import { containersInterface, socketMessage } from './interface/interfaces.js';
 
 dotenv.config();
@@ -18,6 +18,7 @@ export const docker = new Dockerode();
 export const prisma = new PrismaClient();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 app.use(cors());
 app.use(cookieParser());
 app.use("/api/v1", router);
@@ -32,7 +33,7 @@ wss.on("connection", (ws: WebSocket) => {
 		const messageString = typeof data === 'string' ? data : data.toString();
 		const message: socketMessage = JSON.parse(messageString);
 		switch (message.event) {
-			case "command": command(ws, message, containers);
+			case "command": executeCommand(ws, message, containers);
 				break;
 		}
 	})

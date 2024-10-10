@@ -6,6 +6,7 @@ import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } 
 import { Dashboard, Demo, Home, Login, NotFound, Playground, Signup } from './pages'
 import { SocketProvider } from './context/Socket.tsx'
 import { PageLoader } from './components/ui/Loaders.tsx'
+import { ConfigDialog } from './components/index.ts'
 
 const routes = [
   {
@@ -38,7 +39,7 @@ const routes = [
   },
   {
     route: "config",
-    element: <Demo />
+    element: <ConfigDialog />
   }
 ]
 

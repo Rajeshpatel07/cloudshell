@@ -6,12 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
-const specialKeys: string[] = ["\x03"]
+export const checkSpecialKey = (data: string): boolean => {
+  return data.startsWith("\x1B") || data === '\t';
+};
 
-export const checkSpecialKey = (key: string): boolean => {
-  if (specialKeys.includes(key)) {
-    return true;
-  } else {
-    return false;
-  }
-}
+
+
