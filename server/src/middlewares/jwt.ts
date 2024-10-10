@@ -1,26 +1,46 @@
 import { NextFunction, Response, Request } from "express";
-import { JsonWebTokenError, verify } from "jsonwebtoken";
+import jwt, { JsonWebTokenError } from "jsonwebtoken";
+import { generateAcToken } from "../utils/utils.js";
 
-interface payload {
-	ID: string;
+interface Payload {
+	userId: string;
 	iat: number;
 }
 
 const jwtVerify = async (req: Request, res: Response, next: NextFunction) => {
+	console.log(req.cookies);
 	const accessToken = req.cookies.acToken;
-	if (!accessToken) return res.status(403).json({ err: "invalid accessToken" });
+	const refreshToken = req.cookies.rfToken;
 
-	const accessSecret = process.env.JWT_ACCESS_SECRET || " ";
-
-	verify(accessToken, accessSecret, (err: JsonWebTokenError | unknown, payload: payload | unknown) => {
-		if (err) {
-			return res.status(403).json({ err: "invalid accessToken" });
-		}
-		else {
-			console.log(payload);
+	if (!accessToken && !refreshToken) {
+		return res.status(403).json({ error: "Tokens not found" });
+	} else if (!accessToken && refreshToken) {
+		const acToken = newAcToken(refreshToken);
+		console.log(acToken)
+		res.cookie("acToken", acToken, { maxAge: 1000 * 30, sameSite: true })
+		next();
+	} else {
+		const accessSecret = process.env.JWT_ACCESS_SECRET || "";
+		jwt.verify(accessToken, accessSecret, (err: JsonWebTokenError | unknown, decodedPayload: Payload | unknown) => {
+			if (err) {
+				return res.status(403).json({ error: "Invalid access token", details: err });
+			}
+			if (decodedPayload) {
+				console.log(decodedPayload)
+			}
 			next();
-		}
-	})
-}
+		});
+	}
+};
 
 export default jwtVerify;
+
+const newAcToken = (rfToken: string) => {
+	const refreshSecret = process.env.JWT_REFRESH_SECRET || "";
+	const token = jwt.verify(rfToken, refreshSecret, (err: JsonWebTokenError | unknown, payload: Payload | unknown) => {
+		if (err) return null;
+		//@ts-ignore
+		return generateAcToken(payload.userId);
+	})
+	return token;
+}

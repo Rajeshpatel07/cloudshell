@@ -5,7 +5,7 @@ import { docker, containers, prisma } from "../index.js";
 import { generateAcToken, generateRfToken } from "../utils/utils.js";
 
 export const home = (req: Request, res: Response) => {
-	res.send("Cloud Os");
+	return res.status(200).json({ platform: "Cloudshell" });
 }
 
 export const signup = async (req: Request, res: Response) => {
@@ -43,8 +43,8 @@ export const login = async (req: Request, res: Response) => {
 		if (user) {
 			const comparePassword = await compare(password, user.password);
 			if (comparePassword) {
-				res.cookie("acToken", generateAcToken(user.id), { maxAge: 1000 * 60 * 15, sameSite: true });
-				res.cookie("rfToken", generateRfToken(user.id), { maxAge: 1000 * 60 * 60 * 2, httpOnly: true, sameSite: true });
+				res.cookie("acToken", generateAcToken(user.id), { maxAge: 1000 * 60 * 10, sameSite: true });
+				res.cookie("rfToken", generateRfToken(user.id), { maxAge: 1000 * 60 * 24, httpOnly: true, sameSite: true });
 				res.status(201).json({ userId: user.id });
 			} else {
 				res.status(403).json({ err: "incorrect password" })
@@ -54,7 +54,7 @@ export const login = async (req: Request, res: Response) => {
 		}
 	} catch (err) {
 		console.log(err);
-		res.status(500).json({ err: err })
+		res.status(500).json({ err: err || 'Token generation error' });
 	}
 }
 
@@ -91,6 +91,7 @@ export const buildContainer = async (req: Request, res: Response): Promise<void>
 		if (id) {
 			console.log("user login storage")
 		}
+		console.log(containers);
 
 		res.status(201).json({ containerId: container.id });
 		return;
@@ -103,14 +104,13 @@ export const buildContainer = async (req: Request, res: Response): Promise<void>
 
 
 export const pruneContainer = async (req: Request, res: Response) => {
-	const { name, id } = req.body;
+	const { id } = req.params;
 	if (!id) {
 		res.status(400).json({ err: "Invalid ID" });
 		return;
 	}
 	try {
 		docker.pruneContainers(id)
-		docker.pruneVolumes(name)
 		res.status(200).json({ msg: "Container deleted Successfully" })
 	} catch (err) {
 		console.log(err);
@@ -119,7 +119,7 @@ export const pruneContainer = async (req: Request, res: Response) => {
 }
 
 export const stopContainer = async (req: Request, res: Response) => {
-	const { id } = req.body;
+	const { id } = req.params;
 	try {
 		const container = docker.getContainer(id);
 		if (!container) {

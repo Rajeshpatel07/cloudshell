@@ -1,10 +1,10 @@
-import { useState } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { Config } from "@/components"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Config } from ".";
 
+const ConfigDialog = () => {
 
-const Demo = () => {
   const [name, setName] = useState<string>("")
   const [selectedOS, setSelectedOS] = useState<string | null>(null)
   const [error, setError] = useState<string>("");
@@ -46,9 +46,10 @@ const Demo = () => {
       setName={setName}
       setSelectedOS={setSelectedOS}
       handleSubmit={handleSubmit}
-      renderType="page"
+      renderType="dialog"
     />
   )
+
 }
 
-export default Demo;
+export default ConfigDialog;

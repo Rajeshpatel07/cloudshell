@@ -2,18 +2,25 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import SideBar from "@/components/SideBar"
-import { Table } from "@/components"
+import { ConfigDialog, Table } from "@/components"
 import axios from "axios"
-import { SimpleButton } from "@/components/ui/button"
-import { Link } from "react-router-dom"
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { BorderButton } from "@/components/ui/button"
+
+
 
 // Mock data for the table
 const initialItems = [
-  { id: "i23329f2j392nf2fj230..", name: "Ubuntu Server", time: "10:30 AM", status: "Running" },
-  { id: "i23329f2j392nf2fj230..", name: "Debian VM", time: "11:45 AM", status: "Stopped" },
+  { id: "i23329f2j32nf2fj230..", name: "Ubuntu Server", time: "10:30 AM", status: "Running" },
+  { id: "i23329f2j392f2fj230..", name: "Debian VM", time: "11:45 AM", status: "Stopped" },
   { id: "i23329f2j392nf2fj230..", name: "Fedora Workstation", time: "09:15 AM", status: "Running" },
-  { id: "i23329f2j392nf2fj230..", name: "CentOS Server", time: "02:00 PM", status: "Paused" },
-  { id: "i23329f2j392nf2fj230..", name: "Arch Linux", time: "03:30 PM", status: "Running" },
+  { id: "i23329f2j39nf2fj230..", name: "CentOS Server", time: "02:00 PM", status: "Paused" },
+  { id: "i23329f2j392n2fj230..", name: "Arch Linux", time: "03:30 PM", status: "Running" },
 ]
 
 
@@ -56,9 +63,15 @@ const Dashboard = () => {
       <main className="flex-1 py-8 px-3 md:px-8 overflow-x-auto">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold ">Dashboard</h1>
-          <Link to="/config">
-            <SimpleButton title="create Button" />
-          </Link>
+          <Dialog>
+            <DialogTrigger>
+              <BorderButton title="create" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle></DialogTitle>
+              <ConfigDialog />
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="mb-6">
