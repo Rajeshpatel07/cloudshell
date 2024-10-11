@@ -6,7 +6,7 @@ export const Logo: FC = () => {
   return (
     <div className="flex items-center gap-3">
       <img
-        src="logo.png"
+        src="logo.webp"
         className="h-11 w-11"
         alt=" logo"
       />

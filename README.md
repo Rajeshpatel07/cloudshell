@@ -1,12 +1,12 @@
 # Cloudshell
 
 <div align="center">
-	<img src="./client/public/logo.png">
+	<img src="./client/public/logo.webp">
 </div>
 
 ## Description
 
-Cloudshell allows users to create `virtual Operating systems` using Docker containers.
+`Cloudshell` allows users to create `virtual Operating systems` in the browser.
 Users get a interactive `Terminal` inside their browser to interact with various operating systems.
 including **Ubuntu**, **Fedora**, **Arch**, and **Debian**.
 
@@ -49,18 +49,17 @@ Ensure you have the following installed in your system:
 git clone https://github.com/Rajeshpatel07/cloudshell.git
 ```
 
-- Go to /client and /server and install dependencies.
+### Install dependencies using yarn in both frontend and backend.
 
 ```bash
 yarn install
 ```
 
-- For the `.env` checkout the `.env.sample` for the server.
+`NOTE`: For the `.env` checkout the `.env.sample` file
 
-- To run the development server just this command in both /client and /server.
+### Run the development server using the command
 
 ```bash
 yarn dev
 ```
 
-- It will be available on `http://localhost:5173`.
