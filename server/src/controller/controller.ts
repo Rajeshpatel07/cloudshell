@@ -4,8 +4,8 @@ import { hash, compare } from 'bcrypt'
 import { docker, containers, prisma } from "../index.js";
 import { generateAcToken, generateRfToken } from "../utils/utils.js";
 
-export const home = (req: Request, res: Response) => {
-	return res.status(200).json({ platform: "Cloudshell" });
+export const home = async (req: Request, res: Response) => {
+	res.status(200).json({ platform: "Cloudshell" });
 }
 
 export const signup = async (req: Request, res: Response) => {
