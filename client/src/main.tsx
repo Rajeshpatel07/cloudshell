@@ -3,10 +3,9 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import { Dashboard, Demo, Home, Login, NotFound, Playground, Signup } from './pages'
+import { Dashboard, Demo, Home, Login, Manage, NotFound, Playground, Signup } from './pages'
 import { SocketProvider } from './context/Socket.tsx'
 import { PageLoader } from './components/ui/Loaders.tsx'
-import { ConfigDialog } from './components/index.ts'
 
 const routes = [
   {
@@ -22,7 +21,7 @@ const routes = [
     element: <Login />
   },
   {
-    route: "playground",
+    route: "play/:id",
     element: <Playground />
   },
   {
@@ -38,8 +37,8 @@ const routes = [
     element: <Signup />
   },
   {
-    route: "config",
-    element: <ConfigDialog />
+    route: "manage/:id",
+    element: <Manage />
   }
 ]
 

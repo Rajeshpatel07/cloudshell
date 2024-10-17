@@ -15,7 +15,7 @@ const Login: FC = () => {
       const request = await axios.post("/api/v1/login", { email, password });
       console.log(request);
       if (request.status === 201) {
-        localStorage.setItem("userid", JSON.stringify(request.data.userId));
+        localStorage.setItem("userId", JSON.stringify(request.data.userId));
         navigate("/dashboard");
       }
     } catch (err) {

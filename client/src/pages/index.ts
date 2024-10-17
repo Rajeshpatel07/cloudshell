@@ -1,11 +1,13 @@
-import Home from "./Home";
-import NotFound from "./NotFound";
-import Login from "./Login";
-import Demo from "./Demo";
-import Playground from "./Playground";
-import Dashboard from "./Dashboard";
-import Signup from "./Signup";
+import { lazy } from "react";
 
+const Home = lazy(() => import("./Home"));
+const NotFound = lazy(() => import("./NotFound"));
+const Login = lazy(() => import("./Login"));
+const Demo = lazy(() => import("./Demo"));
+const Playground = lazy(() => import("./Playground"));
+const Dashboard = lazy(() => import("./Dashboard"));
+const Signup = lazy(() => import("./Signup"));
+const Manage = lazy(() => import("./Manage"));
 
 export {
 	Home,
@@ -15,4 +17,5 @@ export {
 	Playground,
 	Dashboard,
 	Signup,
+	Manage
 }

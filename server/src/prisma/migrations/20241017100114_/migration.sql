@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
@@ -12,11 +12,11 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "container" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "containerId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "container_pkey" PRIMARY KEY ("id")
 );

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Button } from "./button";
+import { Link } from "react-router-dom";
 
 
 export const TableHeads: FC<{ title: string }> = ({ title }) => {
@@ -15,7 +16,7 @@ interface TableDateProps {
   item: {
     id: string;
     name: string;
-    time: string;
+    createdAt: string;
     status: string;
   }
 }
@@ -24,22 +25,24 @@ export const TableData: FC<TableDateProps> = ({ item }) => {
 
   return (
     <>
-      <tr key={item.id}>
+      <tr key={item.name}>
         <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
-        <td className="px-6 text-blue-500 underline py-4 whitespace-nowrap">{item.id}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{item.time}</td>
+        <td className="px-6 text-blue-500 underline py-4 whitespace-nowrap">{item.id.slice(0, 15)}..</td>
+        <td className="px-6 py-4 whitespace-nowrap">{item.createdAt}</td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.status === 'Running' ? 'bg-green-800 text-green-100' :
-            item.status === 'Stopped' ? 'bg-red-800 text-red-100' :
+          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.status === 'running' ? 'bg-green-800 text-green-100' :
+            item.status === 'stopped' ? 'bg-red-800 text-red-100' :
               'bg-yellow-800 text-yellow-100'
             }`}>
             {item.status}
           </span>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <Button variant="outline" size="sm" className="text-blue-400 hover:text-blue-300">
-            Manage
-          </Button>
+          <Link to={`/manage/${item.id}`}>
+            <Button variant="outline" size="sm" className="text-blue-400 hover:text-blue-300">
+              Manage
+            </Button>
+          </Link>
         </td>
       </tr>
     </>

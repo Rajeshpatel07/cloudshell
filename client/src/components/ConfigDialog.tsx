@@ -15,10 +15,10 @@ const ConfigDialog = () => {
     e.preventDefault()
     if (name.trim().length > 0 && selectedOS !== null) {
       try {
-        const request = await axios.post("/api/v1/create", {
+        const request = await axios.post("/api/v1/c/create", {
           name,
           os: selectedOS,
-          type: "demo"
+          userId: JSON.parse(localStorage.getItem("userId") || "")
         })
         console.log(request);
         if (request.data) {
@@ -27,7 +27,6 @@ const ConfigDialog = () => {
         }
       } catch (err) {
         console.log(err)
-        setError(err.response.data.err.json.message);
       }
     } else {
       if (name.trim().length <= 1) {

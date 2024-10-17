@@ -4,7 +4,7 @@ import { TableData, TableHeads } from "./ui/table.tsx"
 interface TableProps {
   id: string;
   name: string;
-  time: string;
+  createdAt: string;
   status: string;
 }
 

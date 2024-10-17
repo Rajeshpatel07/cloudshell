@@ -8,7 +8,6 @@ interface Payload {
 }
 
 const jwtVerify = async (req: Request, res: Response, next: NextFunction) => {
-	console.log(req.cookies);
 	const accessToken = req.cookies.acToken;
 	const refreshToken = req.cookies.rfToken;
 
@@ -16,7 +15,6 @@ const jwtVerify = async (req: Request, res: Response, next: NextFunction) => {
 		return res.status(403).json({ error: "Tokens not found" });
 	} else if (!accessToken && refreshToken) {
 		const acToken = newAcToken(refreshToken);
-		console.log(acToken)
 		res.cookie("acToken", acToken, { maxAge: 1000 * 30, sameSite: true })
 		next();
 	} else {

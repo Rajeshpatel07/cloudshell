@@ -20,14 +20,14 @@ const App: FC = () => {
         const response = await axios.get("api/v1/home");
         if (response.status == 200) {
           setUser(true);
-          navigate('dashboard')
+          //navigate('dashboard')
         }
       } catch (err) {
         console.log(err);
       }
     }
     request();
-  }, [])
+  }, [navigate])
 
   return (
     <>

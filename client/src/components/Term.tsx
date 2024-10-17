@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button"
 import useSocket from '@/context/Socket'
 import 'xterm/css/xterm.css'
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const TerminalWindow: FC = () => {
   const [terminal, setTerminal] = useState<XTermInstance | null>(null);
   const { socket } = useSocket();
+
+  const params = useParams();
 
   const onTermInit = (term: XTermInstance) => {
     setTerminal(term);
@@ -21,7 +24,7 @@ const TerminalWindow: FC = () => {
       socket.send(JSON.stringify({
         event: "command",
         command: "uname\r",
-        containerId: JSON.parse(localStorage.getItem("containerId") || "")
+        containerId: params.id
       }))
     }
   }
@@ -35,7 +38,7 @@ const TerminalWindow: FC = () => {
       socket.send(JSON.stringify({
         event: "command",
         command: data,
-        containerId: JSON.parse(localStorage.getItem("containerId") || "")
+        containerId: params.id
       }))
     }
   };

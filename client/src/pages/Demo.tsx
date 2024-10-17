@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { FC, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Config } from "@/components"
 
 
-const Demo = () => {
+const Demo: FC = () => {
   const [name, setName] = useState<string>("")
   const [selectedOS, setSelectedOS] = useState<string | null>(null)
   const [error, setError] = useState<string>("");
@@ -15,7 +15,7 @@ const Demo = () => {
     e.preventDefault()
     if (name.trim().length > 0 && selectedOS !== null) {
       try {
-        const request = await axios.post("/api/v1/create", {
+        const request = await axios.post("/api/v1/trydemo", {
           name,
           os: selectedOS,
           type: "demo"
@@ -23,11 +23,10 @@ const Demo = () => {
         console.log(request);
         if (request.data) {
           localStorage.setItem("containerId", JSON.stringify(request?.data.containerId));
-          navigate("/playground");
+          navigate(`/play/${request.data.contianerId}`);
         }
       } catch (err) {
         console.log(err)
-        setError(err.response.data.err.json.message);
       }
     } else {
       if (name.trim().length <= 1) {
