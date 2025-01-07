@@ -37,7 +37,7 @@ const Dashboard: FC = () => {
     const fetchContainers = async () => {
       const userId = JSON.parse(localStorage.getItem("userId") || "");
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/c/${userId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/c/${userId}`, { withCredentials: true });
         if (response.status === 200) {
           setItems(response.data.containers)
           setSearchItems(response.data.containers)
@@ -54,7 +54,7 @@ const Dashboard: FC = () => {
 
   const logout = async () => {
     try {
-      const request = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/logout`);
+      const request = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/logout`, { withCredentials: true });
       if (request.status === 200) {
         navigate("/");
       }

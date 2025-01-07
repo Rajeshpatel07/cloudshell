@@ -19,7 +19,7 @@ const Demo: FC = () => {
           name,
           os: selectedOS,
           type: "demo"
-        })
+        }, { withCredentials: true })
         if (response.status === 201) {
           navigate(`/play/${response.data.containerId}`);
         }

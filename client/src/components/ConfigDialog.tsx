@@ -19,7 +19,7 @@ const ConfigDialog = () => {
           name,
           os: selectedOS,
           userId: JSON.parse(localStorage.getItem("userId") || "")
-        })
+        }, { withCredentials: true })
         if (request.data) {
           navigate(`/play/${request.data.containerId}`);
         }

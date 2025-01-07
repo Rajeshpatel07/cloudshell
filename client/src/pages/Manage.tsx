@@ -28,7 +28,7 @@ const Manage: FC = () => {
   useEffect(() => {
     const getContainerInfo = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/c/info/${params.id}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/c/info/${params.id}`, { withCredentials: true });
         if (response.status == 200) {
           setConfig(response.data.info);
         }
@@ -45,7 +45,7 @@ const Manage: FC = () => {
     try {
       const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/v1/c/${url}`, {
         id: params.id
-      });
+      }, { withCredentials: true });
       if (response.status == 200) {
         setConfig(prev => prev ? { ...prev, status: "stopped" } : null);
       }
@@ -58,7 +58,7 @@ const Manage: FC = () => {
     try {
       const response = await axios.put(`/api/v1/c/restart`, {
         id: params.id
-      });
+      }, { withCredentials: true });
       if (response.status === 200) {
         setConfig(prev => prev ? { ...prev, status: "running" } : null);
       }
@@ -69,7 +69,7 @@ const Manage: FC = () => {
 
   const handlePrune = async () => {
     try {
-      const response = await axios.delete(`/api/v1/c/prune/${params.id}`)
+      const response = await axios.delete(`/api/v1/c/prune/${params.id}`, { withCredentials: true })
       if (response.status === 200) {
         navigate('/dashboard');
       }

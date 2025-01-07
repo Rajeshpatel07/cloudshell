@@ -21,7 +21,7 @@ const Signup: FC = () => {
     e.preventDefault()
     setIsLoading(true);
     try {
-      const request = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/signup`, { name, email, password });
+      const request = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/signup`, { name, email, password }, { withCredentials: true });
       if (request.status === 201) {
         setIsLoading(false);
         navigate("/login");
