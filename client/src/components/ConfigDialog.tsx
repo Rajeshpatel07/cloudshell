@@ -15,12 +15,11 @@ const ConfigDialog = () => {
     e.preventDefault()
     if (name.trim().length > 0 && selectedOS !== null) {
       try {
-        const request = await axios.post("/api/v1/c/create", {
+        const request = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/c/create`, {
           name,
           os: selectedOS,
           userId: JSON.parse(localStorage.getItem("userId") || "")
         })
-        console.log(request);
         if (request.data) {
           navigate(`/play/${request.data.containerId}`);
         }

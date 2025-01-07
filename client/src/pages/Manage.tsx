@@ -28,8 +28,7 @@ const Manage: FC = () => {
   useEffect(() => {
     const getContainerInfo = async () => {
       try {
-        const response = await axios.get(`/api/v1/c/info/${params.id}`);
-        console.log(response);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/c/info/${params.id}`);
         if (response.status == 200) {
           setConfig(response.data.info);
         }
@@ -44,10 +43,9 @@ const Manage: FC = () => {
   const handleAction = async () => {
     const url = config && config.status === "running" ? "stop" : "restart"
     try {
-      const response = await axios.put(`/api/v1/c/${url}`, {
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/v1/c/${url}`, {
         id: params.id
       });
-      console.log(response);
       if (response.status == 200) {
         setConfig(prev => prev ? { ...prev, status: "stopped" } : null);
       }
@@ -61,7 +59,6 @@ const Manage: FC = () => {
       const response = await axios.put(`/api/v1/c/restart`, {
         id: params.id
       });
-      console.log(response);
       if (response.status === 200) {
         setConfig(prev => prev ? { ...prev, status: "running" } : null);
       }
@@ -73,7 +70,6 @@ const Manage: FC = () => {
   const handlePrune = async () => {
     try {
       const response = await axios.delete(`/api/v1/c/prune/${params.id}`)
-      console.log(response)
       if (response.status === 200) {
         navigate('/dashboard');
       }

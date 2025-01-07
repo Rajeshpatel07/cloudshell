@@ -15,12 +15,11 @@ const Demo: FC = () => {
     e.preventDefault()
     if (name.trim().length > 0 && selectedOS !== null) {
       try {
-        const response = await axios.post("/api/v1/trydemo", {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/trydemo`, {
           name,
           os: selectedOS,
           type: "demo"
         })
-        console.log(response)
         if (response.status === 201) {
           navigate(`/play/${response.data.containerId}`);
         }

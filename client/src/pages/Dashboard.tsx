@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
-import SideBar from "@/components/SideBar"
 import { ConfigDialog, Table } from "@/components"
 import axios from "axios"
 import {
@@ -38,36 +37,24 @@ const Dashboard: FC = () => {
     const fetchContainers = async () => {
       const userId = JSON.parse(localStorage.getItem("userId") || "");
       try {
-        const response = await axios.get(`/api/v1/c/${userId}`);
-        console.log(response);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/c/${userId}`);
         if (response.status === 200) {
           setItems(response.data.containers)
           setSearchItems(response.data.containers)
         }
       } catch (err) {
         console.log(err)
+        //@ts-expect-error server error
         setError(err.message);
       }
     }
-    const request = async () => {
-      try {
-        const response = await axios.get("api/v1/home");
-        if (response.status === 200) {
-          fetchContainers();
-        }
-      } catch (err) {
-        console.log(err);
-        if (err.status === 403) {
-          navigate('/');
-        }
-      }
-    }
-    request();
+
+    fetchContainers();
   }, [])
 
   const logout = async () => {
     try {
-      const request = await axios.get(`/api/v1/logout`);
+      const request = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/logout`);
       if (request.status === 200) {
         navigate("/");
       }
@@ -80,7 +67,6 @@ const Dashboard: FC = () => {
     <>
       {error.length > 0 && <Alert title={error} />}
       <div className="min-h-screen bg-black text-white flex w-full">
-        <SideBar />
 
         <main className="flex-1 py-8 px-3 md:px-8 overflow-x-auto">
           <div className="flex items-center justify-between mb-6">
@@ -118,7 +104,14 @@ const Dashboard: FC = () => {
           {/* Table */}
           <div className="border-2 rounded-lg overflow-x-auto ">
             <Table items={searchItems} />
+
           </div>
+          {
+            searchItems.length === 0 &&
+            <div className="w-full">
+              <h1 className="text-xl font-semibold py-10 text-center">nothing to show</h1>
+            </div>
+          }
         </main>
       </div>
     </>

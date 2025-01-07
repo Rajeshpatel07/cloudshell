@@ -69,7 +69,7 @@ const TerminalWindow: FC = () => {
   }, [terminal, socket])
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="bg-black text-white flex flex-col">
       {
         error.length > 0 ?
           <DisplayError
@@ -79,7 +79,7 @@ const TerminalWindow: FC = () => {
             buttonText='Go to Dashboard'
           />
           :
-          <main className="flex-grow container mx-auto px-4 py-6 flex flex-col">
+          <main className="container mx-auto px-4 py-6 flex flex-col">
             <div className="border-2 border-gray-800 rounded-md h-9/12">
               <div className="bg-gray-900 rounded-t-lg p-2 flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>

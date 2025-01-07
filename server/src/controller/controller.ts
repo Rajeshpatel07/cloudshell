@@ -213,8 +213,9 @@ export const contianerInfo = async (req: Request, res: Response) => {
 	}
 }
 
-export const logout = async (req: Request, res: Response) => {
+export const logout = (req: Request, res: Response) => {
 	res.cookie("acToken", '', { maxAge: 1, httpOnly: true, sameSite: true });
 	res.cookie("rfToken", '', { maxAge: 1, httpOnly: true, sameSite: true });
 	res.status(200).json({ msg: "success" });
+	return;
 }
