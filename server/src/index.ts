@@ -20,9 +20,15 @@ const wss = new WebSocketServer({ server });
 export const docker = new Dockerode();
 export const prisma = new PrismaClient();
 
+const corsOptions = {
+	origin: 'https://example.com',
+	credentials: true,
+	exposedHeaders: '*'
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use("/api/v1", router);
 app.use(status());

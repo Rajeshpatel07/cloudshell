@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "tsc && cp -r ./src/prisma ./dist",
-    "start": "tsc --watch & nodemon ./dist/index.js",
+    "start":"node ./dist/index.js",
+    "dev:start": "tsc --watch & nodemon ./dist/index.js",
     "dev": "nodemon --exec 'node --loader ts-node/esm' ./src/index.ts"
   },
   "dependencies": {
