@@ -2,6 +2,7 @@ import Dockerode from "dockerode";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { docker } from "../index.js";
+import { RawData } from "ws";
 dotenv.config();
 
 export const isImageAvailable = async (os: string): Promise<boolean> => {
@@ -46,4 +47,14 @@ export const buildStartContainer = async (name: string, os: string): Promise<{
 		stream: true
 	})
 	return { container, shellStream };
+}
+
+export const isValidJSON = (str: RawData) => {
+	try {
+		const data = str.toString();
+		JSON.parse(data);
+		return true;
+	} catch (e) {
+		return false;
+	}
 }

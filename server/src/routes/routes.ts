@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { home, buildContainer, pruneContainer, stopContainer, restartContainer, signup, login, tryDemo, userContainers, contianerInfo } from "../controller/controller.js";
+import { home, buildContainer, pruneContainer, stopContainer, restartContainer, signup, login, tryDemo, userContainers, contianerInfo, logout } from "../controller/controller.js";
 import jwtVerify from "../middlewares/jwt.js";
 
 const router = Router();
@@ -10,6 +10,7 @@ router.route("/home").get(jwtVerify, home);
 
 router.route("/signup").post(signup);
 router.route("/login").post(login)
+router.route("/logout").get(logout);
 
 
 router.route("/trydemo").post(tryDemo);

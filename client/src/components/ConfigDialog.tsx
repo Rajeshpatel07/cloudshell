@@ -22,8 +22,7 @@ const ConfigDialog = () => {
         })
         console.log(request);
         if (request.data) {
-          localStorage.setItem("containerId", JSON.stringify(request?.data.containerId));
-          navigate("/playground");
+          navigate(`/play/${request.data.containerId}`);
         }
       } catch (err) {
         console.log(err)

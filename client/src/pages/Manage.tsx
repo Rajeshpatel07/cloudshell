@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Loader, Power, RefreshCw, Terminal } from "lucide-react"
+import { Delete, Loader, Power, RefreshCw, Terminal } from "lucide-react"
 import { Title } from "@/components/ui/title"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
-
+import { AlertDialog } from "@/components/ui/dialog"
+//
+//
 // Sample data for the instance configuration
 interface osConfig {
   id: string;
@@ -15,16 +17,12 @@ interface osConfig {
   createdAt: string;
 }
 
-//setInstanceConfig(prevConfig => ({
-//      ...prevConfig,
-//      status: action === 'stop' ? 'Stopped' : 'Running',
-//      launchTime: action !== 'stop' ? new Date().toISOString().replace('T', ' ').substring(0, 19) : prevConfig.createdAt
-//    }))
 
 const Manage: FC = () => {
   const [config, setConfig] = useState<osConfig | null>(null);
 
   const params = useParams();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -72,6 +70,18 @@ const Manage: FC = () => {
     }
   }
 
+  const handlePrune = async () => {
+    try {
+      const response = await axios.delete(`/api/v1/c/prune/${params.id}`)
+      console.log(response)
+      if (response.status === 200) {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="min-h-screen  text-gray-100">
       {config === null && <Loader className="w-16 h-16" />}
@@ -81,43 +91,63 @@ const Manage: FC = () => {
             <h1 className="text-3xl font-bold">Instance Configuration</h1>
             <div className="flex space-x-2">
               {config.status === "running" &&
-                <Button
-                  variant="outline"
-                  className={'text-red-500 hover:text-red-400'}
-                  onClick={handleAction}
+                <AlertDialog
+                  title="Are you Sure to stop this container ?"
+                  handlePrune={handleAction}
+                  description="It will be Stopped"
+                  buttonTitle="Stop the Container"
+                  buttonColor="text-red-500 hover:text-red-300"
+                  triggername="Stop"
                 >
                   <Power className="h-4 w-4 mr-2" />
-                  Stop
-                </Button>
+                </AlertDialog>
               }
-              <Button
-                variant="outline"
-                className="text-yellow-400 hover:text-yellow-300"
-                onClick={handleRestart}
+              <AlertDialog
+                title="Are you Sure to restart this container ?"
+                handlePrune={handleRestart}
+                description="It will be Restarted"
+                buttonTitle="Restart the Container"
+
+                buttonColor="text-yellow-500 hover:text-yellow-300"
+                triggername="Restart"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
-                Restart
-              </Button>
-              <Link to={`/play/${params.id}`}>
-                <Button
-                  variant="outline"
-                  className="text-blue-500 hover:text-blue-300"
-                >
-                  <Terminal className="h-4 w-4 mr-2" />
-                  Open
-                </Button>
-              </Link>
+              </AlertDialog>
+              <AlertDialog
+                title="Are you Sure to prune this container ?"
+                handlePrune={handlePrune}
+                description="It will be completely deleted"
+                buttonTitle="Prune the Container"
+                buttonColor="text-brown-500 hover:text-brown-300"
+                triggername="prune"
+              >
+                <Delete className="h-4 w-4 mr-2" />
+              </AlertDialog>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-6">
             <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold mb-4">Instance Details</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold mb-4">Instance Details</h2>
+                {config.status === 'running' &&
+
+
+                  <Link to={`/play/${params.id}`}>
+                    <Button
+                      variant="outline"
+                      className="text-blue-500 hover:text-blue-300 "
+                    >
+                      <Terminal className="h-4 w-4 mr-2" />
+                      Open
+                    </Button>
+                  </Link>
+                }
+              </div>
               <div className="space-y-2">
                 <Title config={config} />
               </div>
             </div>
-
           </div>
         </main>
       }

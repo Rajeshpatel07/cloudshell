@@ -3,6 +3,8 @@ import { containersInterface, socketMessage } from "../interface/interfaces.js"
 
 export const executeCommand = (ws: WebSocket, message: socketMessage, containers: containersInterface) => {
 	const { containerId, command } = message;
+	//@ts-ignore
+	//console.log("request comming from ->", ws.id)
 
 	try {
 		const container = containers.get(containerId);
@@ -17,7 +19,8 @@ export const executeCommand = (ws: WebSocket, message: socketMessage, containers
 
 			if (!container.listening) {
 				shellStream.on("data", buffer => {
-					ws.send(JSON.stringify({ event: "buffer", buffer: buffer.toString() }));
+					//@ts-ignore
+					return ws.send(JSON.stringify({ event: "buffer", buffer: buffer.toString() }));
 				});
 
 				shellStream.on("err", err => {

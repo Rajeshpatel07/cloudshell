@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button"
 import { Link, useNavigate } from "react-router-dom"
 import { FormInput } from "@/components/ui/input"
 import axios from "axios"
+import { Alert } from "@/components/ui/alert"
 
 const Login: FC = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,12 +22,13 @@ const Login: FC = () => {
       }
     } catch (err) {
       console.log(err);
+      setError(err.response.data.err);
     }
   }
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-
+      {error.length > 1 && <Alert title={error} />}
       <main className="flex-grow flex items-center justify-center">
         <div className="w-full max-w-md px-3">
           <h1 className="text-3xl font-bold mb-6 text-center">Login to CloudShell</h1>

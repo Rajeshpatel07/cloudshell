@@ -15,15 +15,14 @@ const Demo: FC = () => {
     e.preventDefault()
     if (name.trim().length > 0 && selectedOS !== null) {
       try {
-        const request = await axios.post("/api/v1/trydemo", {
+        const response = await axios.post("/api/v1/trydemo", {
           name,
           os: selectedOS,
           type: "demo"
         })
-        console.log(request);
-        if (request.data) {
-          localStorage.setItem("containerId", JSON.stringify(request?.data.containerId));
-          navigate(`/play/${request.data.contianerId}`);
+        console.log(response)
+        if (response.status === 201) {
+          navigate(`/play/${response.data.containerId}`);
         }
       } catch (err) {
         console.log(err)

@@ -3,6 +3,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
+import { Button } from "./button"
+import { Delete } from "lucide-react"
 
 const Dialog = DialogPrimitive.Root
 
@@ -117,4 +119,53 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
+}
+
+
+interface props {
+  title: string;
+  children: React.ReactNode
+  handlePrune: () => void
+  description: string;
+  buttonTitle: string;
+  triggername: string;
+  buttonColor: string;
+}
+
+export const AlertDialog: React.FC<props> = ({
+  children,
+  handlePrune,
+  title,
+  description,
+  buttonTitle,
+  triggername,
+  buttonColor
+}) => {
+
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <Button
+          variant="outline"
+          className={buttonColor}
+        >
+          {children}
+          {triggername}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>
+            {description}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={handlePrune}>
+            {buttonTitle}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
 }

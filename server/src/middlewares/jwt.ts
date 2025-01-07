@@ -24,7 +24,7 @@ const jwtVerify = async (req: Request, res: Response, next: NextFunction) => {
 				return res.status(403).json({ error: "Invalid access token", details: err });
 			}
 			if (decodedPayload) {
-				console.log(decodedPayload)
+				//console.log(decodedPayload)
 			}
 			next();
 		});

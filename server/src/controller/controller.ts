@@ -18,7 +18,7 @@ export const signup = async (req: Request, res: Response) => {
 	try {
 		const hashPassword = await hash(password, 10);
 		const user = await signUp(name, email, hashPassword);
-		console.log(user);
+		//console.log(user);
 		res.status(201).json({ userId: user.id })
 	} catch (err) {
 		console.log(err);
@@ -133,7 +133,7 @@ export const stopContainer = async (req: Request, res: Response) => {
 		await container.stop();
 		containers.delete(id);
 		const status = await changeContainerStatus(id, "stopped");
-		console.log(status);
+		//console.log(status);
 		res.status(200).json({ msg: status.status })
 	} catch (err) {
 		console.log(err);
@@ -177,6 +177,7 @@ export const restartContainer = async (req: Request, res: Response) => {
 
 export const userContainers = async (req: Request, res: Response) => {
 	const { userId } = req.params;
+	//console.log(userId);
 	if (!userId) {
 		res.status(403).json({ err: "invalid userId" });
 		return;
@@ -210,4 +211,10 @@ export const contianerInfo = async (req: Request, res: Response) => {
 		console.log(err);
 		res.status(500).json({ err: err });
 	}
+}
+
+export const logout = async (req: Request, res: Response) => {
+	res.cookie("acToken", '', { maxAge: 1, httpOnly: true, sameSite: true });
+	res.cookie("rfToken", '', { maxAge: 1, httpOnly: true, sameSite: true });
+	res.status(200).json({ msg: "success" });
 }
