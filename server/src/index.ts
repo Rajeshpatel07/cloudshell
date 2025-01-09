@@ -21,7 +21,7 @@ export const docker = new Dockerode();
 export const prisma = new PrismaClient();
 
 const corsOptions = {
-	origin: 'https://example.com',
+	origin: ['https://example.com', 'http://localhost:5173'],
 	credentials: true,
 	exposedHeaders: '*'
 };
