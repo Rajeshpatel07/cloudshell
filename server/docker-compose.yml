@@ -1,43 +1,43 @@
-version: "3.9"
+version: "2.3"
 services:
   db:
-    image: postgres:15-alpine
+    image: postgres
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - db_data:/var/lib/postgresql/data # Persist data across restarts
+      - db_data:/var/lib/postgresql/data 
     ports:
-      - "5432:5432" # Expose only for local development if needed. Remove in production!
+      - "5432:5432" 
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks: 
+      - server
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
-      args: # Build args for secure env handling
-        DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
-        PORT: ${PORT}
-        NODE_ENV: ${NODE_ENV}
     ports:
       - "${PORT}:${PORT}"
     depends_on:
       db:
-        condition: service_healthy # Ensure the database is up before starting the app
+        condition: service_healthy 
     restart: always
-    environment: # Runtime env variables. Best to keep minimal here
+    environment: 
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
-      PORT: ${PORT}
-      NODE_ENV: ${NODE_ENV}
-    command: sh -c "yarn prisma migrate dev --name init && yarn start" # Run migrations before starting
     volumes:
-      - .env:/app/.env # Mount .env file (for local development ONLY. See explanation!)
+      - .env:/app/.env 
+    networks:
+      - server
 
 volumes:
   db_data:
+
+networks:
+    server:
